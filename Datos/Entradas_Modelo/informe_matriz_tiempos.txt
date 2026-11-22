@@ -1,0 +1,27 @@
+Parametros: factor de ruta 1.3, velocidad 30.0 km/h, taller en el area 31 (Lower West Side)
+
+Puntos representativos (lat, lon):
+  Centro: 41.8748, -87.6427
+  Norte-Centro: 41.9068, -87.6384
+  Norte: 41.9575, -87.6641
+  Oeste: 41.9044, -87.6862
+  Sur: 41.8015, -87.6063
+  Taller: 41.8503, -87.6676
+
+DISTANCIAS (km por carretera, estimadas)
+              Centro  Norte-Centro  Norte  Oeste    Sur  Taller
+Centro          0.00          4.65  12.18   6.33  11.31    4.44
+Norte-Centro    4.65          0.00   7.84   5.15  15.61    8.76
+Norte          12.18          7.84   0.00   8.04  23.40   15.51
+Oeste           6.33          5.15   8.04   0.00  17.19    8.08
+Sur            11.31         15.61  23.40  17.19   0.00    9.66
+Taller          4.44          8.76  15.51   8.08   9.66    0.00
+
+TIEMPOS (minutos de camion)
+              Centro  Norte-Centro  Norte  Oeste   Sur  Taller
+Centro           0.0           9.3   24.4   12.7  22.6     8.9
+Norte-Centro     9.3           0.0   15.7   10.3  31.2    17.5
+Norte           24.4          15.7    0.0   16.1  46.8    31.0
+Oeste           12.7          10.3   16.1    0.0  34.4    16.2
+Sur             22.6          31.2   46.8   34.4   0.0    19.3
+Taller           8.9          17.5   31.0   16.2  19.3     0.0

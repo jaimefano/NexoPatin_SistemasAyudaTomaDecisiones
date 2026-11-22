@@ -1,0 +1,21 @@
+**/node_modules
+**/__pycache__
+frontend/dist
+Memoria_Final
+Entrega_Parcial*
+Claude outputs
+Graficos_Imagenes
+Documentacion
+Instrucciones para diseño
+Datos/Viajes_Originales
+Datos/Viajes_Limpios
+# Datos locales: no van dentro de la imagen (la base de datos se monta como volumen)
+backend/datos
+backend/usuarios.json
+backend/plan_confirmado.json
+backend/*.log
+*.log
+.env
+frontend/src/**/*.bak*
+.claude
+.impeccable

@@ -1,0 +1,10 @@
+ESCENARIOS POR VARIABILIDAD DIARIA
+escenario      tipo_dia  probabilidad  dias_del_grupo  ratio_medio  factor_normalizado  viajes_base_dia  viajes_dia_escenario
+    flojo     laborable        0.3333              20        0.816               0.834             7140                  5958
+   normal     laborable        0.3333              21        1.000               1.023             7140                  7303
+   fuerte     laborable        0.3333              20        1.118               1.143             7140                  8161
+    flojo fin_de_semana        0.3333               8        0.635               0.619             6388                  3952
+   normal fin_de_semana        0.3333              10        0.989               0.963             6388                  6149
+   fuerte fin_de_semana        0.3333               8        1.457               1.419             6388                  9063
+
+Festivos excluidos: 4 dias

@@ -1,0 +1,49 @@
+INTERFAZ DEL SATD · NexoPatin (segun Instrucciones para diseño/Diseno_Interfaz_SATD.md, v2, y cambios hasta el 22/11/2026)
+
+ARRANCAR CON DOCKER (forma recomendada; es como se despliega en la maquina virtual)
+  1) Copiar .env.example como .env y poner la contraseña del administrador en SATD_ADMIN_CLAVE
+     (solo se usa la primera vez, al crear la base de datos; si no se pone, el administrador es admin/admin).
+  2) docker compose up -d --build
+  3) Abrir http://localhost:8000  (portada -> Entrar -> iniciar sesion o crear cuenta)
+     Administrador: usuario "admin" -> entra en /admin (estado de la flota de hoy).
+  Cuando se sirva por HTTPS (Caddy delante), poner SATD_COOKIE_SEGURA=1 en .env.
+
+ARRANCAR EN DESARROLLO (sin Docker; dos terminales desde la carpeta Proyecto)
+  1) cd backend   &&  py -m uvicorn main:app --reload --port 8000
+  2) cd frontend  &&  npm install (solo la primera vez)  &&  npm run dev     -> http://localhost:5173
+  Dependencias Python: py -m pip install numpy pandas fastapi uvicorn tzdata
+
+DATOS (SQLite, backend/db.py)
+  Tablas: usuarios, sesiones, estado_flota (una fila por noche) y planes_confirmados (uno por noche).
+  En Docker la base de datos esta en el volumen "satd_datos" (/app/datos/satd.db); en desarrollo, en backend/datos/.
+  Copia de seguridad:   docker compose cp satd:/app/datos/satd.db ./copia-satd.db
+  Restaurar una copia:  docker compose cp ./copia-satd.db satd:/app/datos/satd.db  &&  docker compose restart satd
+  Al crear la base de datos por primera vez se importan los JSON antiguos de backend/ si existen
+  (usuarios.json, estado_noche.json, plan_confirmado.json); despues ya no se usan.
+
+FECHA Y FLOTA
+  La noche que se planifica es la de HOY (hora de España) y cambia sola cada dia. Los 3 dias del horizonte son los
+  tres siguientes y cada uno usa su tipo (sabado y domingo: fin de semana; festivos no modelados).
+  El administrador solo carga el estado de la flota de cada noche. Si aun no lo ha hecho, el jefe ve la ultima
+  cargada con un aviso y no puede enviar la ruta.
+
+SEGURIDAD
+  Toda la API exige sesion (cookie HttpOnly de 12 h) salvo login, registro y logout; /api/admin/* exige rol admin.
+  Contraseñas con PBKDF2 y sal. Tras 5 intentos fallidos en 10 min se bloquea el login de ese usuario y equipo.
+
+FLUJO DEL JEFE (barra de pasos en todas las pantallas)
+  /opciones     1 Seleccionar: planes completos de la noche, filtros por rango de KPI, bandeja de hasta 3 (A, B, C)
+  /plan-propio  2 Plan propio (opcional): constructor guiado; se guarda en un hueco de la bandeja
+  /comparar     3 Comparar: 2 o 3 planes lado a lado + "no hacer nada"; esperado / peor escenario
+  /decidir      4 Decidir: el jefe confirma y la ruta se envia; la noche queda cerrada (no se puede cambiar)
+                  y se muestra "La ruta ha sido enviada al equipo" con la hoja de ruta de cada camion.
+  /limites      Limites del jefe · /perfil  datos de la cuenta, rutas enviadas en noches anteriores, cerrar sesion
+El sistema no recomienda, no ordena por defecto (orden neutro por identificador) y no da puntuaciones.
+
+FICHEROS
+  backend/main.py   FastAPI; reutiliza Sistema/simulador.py y sugerencias.py sin cambiarlos. Sirve tambien el frontend compilado.
+  backend/db.py     Base de datos SQLite.
+  Sistema/planes.py Generador de planes completos (se cachea en memoria: el backend corre con un solo proceso).
+  frontend/src      React + Vite + Tailwind. App.jsx (sesion, barra lateral y rutas) · api.js · store.jsx · Portada.jsx ·
+                    Acceso.jsx · Opciones.jsx · PlanPropio.jsx · Comparar.jsx · Decidir.jsx · Perfil.jsx · Admin.jsx
+  La aplicacion se dibuja al 75 % (variable --escala en frontend/src/index.css).

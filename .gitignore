@@ -1,0 +1,39 @@
+# Repositorio de despliegue: solo lo que necesita la máquina virtual para construir y arrancar la web con Docker.
+# Se ignora todo y se incluye expresamente lo esencial (memoria, documentación, datos brutos y entregas quedan fuera).
+/*
+!/.gitignore
+!/.dockerignore
+!/.env.example
+!/Dockerfile
+!/docker-compose.yml
+!/LEEME_Interfaz.txt
+
+# Modelo y simulador
+!/Sistema/
+
+# Servidor (FastAPI). Sin datos locales: la base de datos vive en un volumen de Docker
+!/backend/
+/backend/datos/
+/backend/usuarios.json
+/backend/plan_confirmado.json
+
+# Web (React + Vite); se compila dentro de Docker
+!/frontend/
+/frontend/node_modules/
+/frontend/dist/
+
+# Datos que usa el modelo (los mismos que copia el Dockerfile)
+!/Datos/
+/Datos/*
+!/Datos/Entradas_Modelo/
+!/Datos/Escenarios_Demanda/
+!/Datos/Analisis_Demanda/
+/Datos/Analisis_Demanda/*
+!/Datos/Analisis_Demanda/od_proporciones_hora.csv
+
+# En cualquier carpeta
+__pycache__/
+*.pyc
+*.log
+.env
+*.bak*

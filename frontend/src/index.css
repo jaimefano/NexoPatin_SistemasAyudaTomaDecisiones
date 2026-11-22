@@ -1,0 +1,72 @@
+@import "tailwindcss";
+/* Las copias de seguridad de componentes no forman parte de la web: que Tailwind no las lea */
+@source not "./components/*.bak*";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/space-grotesk";
+
+@theme {
+  --font-sans: "Inter Variable", system-ui, sans-serif;
+  --font-logo: "Space Grotesk Variable", system-ui, sans-serif;
+  --color-ink: #000000;
+  --color-canvas: #ffffff;
+  --color-surface: #f6f6f6;
+  --color-surface-2: #eeeeee;
+  --color-border: #e2e2e2;
+  --color-border-strong: #cbcbcb;
+  --color-muted: #6b6b6b;
+  --color-muted-2: #afafaf;
+  --color-accent: #000000;
+  --color-cta: #11a5a5;
+  --color-cta-hover: #0e8c8c;
+  --color-cta-ink: #0a6b6b;
+  --color-accent-bg: #e6e6e6;
+  --color-accent-ink: #000000;
+  --color-positive: #048848;
+  --color-warning: #ffc043;
+  --color-warning-ink: #996f00;
+  --color-negative: #e11900;
+  --color-truck-1: #e8590c;
+  --color-truck-2: #000000;
+  --color-truck-3: #11a5a5;
+  --color-truck-4: #7356bf;
+}
+
+html, body { background: #fff; color: #000; font-size: 14px; font-family: var(--font-sans); }
+body { font-variant-numeric: tabular-nums; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+:focus-visible { outline: 2px solid var(--color-cta); outline-offset: 2px; }
+
+input[type=range] { -webkit-appearance: none; appearance: none; height: 4px; border-radius: 9999px; background: var(--color-border); width: 100%; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 9999px; background: #fff; border: 2px solid #000; box-shadow: 0 2px 8px rgba(0,0,0,.12); }
+input[type=range]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 9999px; background: #fff; border: 2px solid #000; }
+
+.shadow-float { box-shadow: 0 2px 8px rgba(0,0,0,.12); }
+.striped { background-image: repeating-linear-gradient(45deg, var(--color-cta) 0 4px, #fff 4px 8px); }
+.dim { opacity: .55; transition: opacity .15s; }
+html, body, main, main * { overflow-anchor: none; }
+
+/* Escala de la aplicación (no de la portada ni del acceso): todo un 25 % más pequeño para que quepa en pantallas de 1080 px */
+:root { --escala: .75; }
+.app-escala { zoom: var(--escala); }
+
+/* Portada */
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+.portada ::selection { background: var(--color-cta); color: #fff; }
+@media (prefers-reduced-motion: no-preference) {
+  .portada .entra { animation: entra .9s cubic-bezier(.16, 1, .3, 1) both; animation-delay: var(--d, 0ms); }
+  @keyframes entra { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Selector de rango doble (filtros de Opciones): dos <input range> superpuestos */
+.rango2 { position: relative; height: 22px; }
+.rango2 input[type=range] { position: absolute; left: 0; top: 9px; width: 100%; pointer-events: none; background: transparent; }
+.rango2 input[type=range]::-webkit-slider-thumb { pointer-events: auto; }
+.rango2 input[type=range]::-moz-range-thumb { pointer-events: auto; }
+.rango2 .pista { position: absolute; left: 0; right: 0; top: 10px; height: 2px; background: var(--color-border-strong); border-radius: 9999px; }
+
+/* Deslizador del presupuesto (Comparar > Coste-beneficio): pista gruesa con tramo relleno y tirador azul grande */
+input[type=range].rango-pres { height: 5px; background: linear-gradient(to right, #11A5A5 var(--p, 0%), #D4D4D4 var(--p, 0%)); }
+input[type=range].rango-pres::-webkit-slider-thumb { width: 26px; height: 26px; background: #11A5A5; border: 3px solid #fff; box-shadow: 0 0 0 1.5px #11A5A5, 0 2px 8px rgba(0,0,0,.25); cursor: grab; }
+input[type=range].rango-pres::-moz-range-thumb { width: 22px; height: 22px; background: #11A5A5; border: 3px solid #fff; box-shadow: 0 0 0 1.5px #11A5A5; cursor: grab; }

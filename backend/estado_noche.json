@@ -1,0 +1,19 @@
+{
+  "fecha": "2026-11-22",
+  "tipo_dia": "fin_de_semana",
+  "cargados": {
+    "Centro": 89,
+    "Norte-Centro": 78,
+    "Norte": 38,
+    "Oeste": 29,
+    "Sur": 17
+  },
+  "bajos": {
+    "Centro": 37,
+    "Norte-Centro": 32,
+    "Norte": 16,
+    "Oeste": 13,
+    "Sur": 8
+  },
+  "stock_taller": 106
+}

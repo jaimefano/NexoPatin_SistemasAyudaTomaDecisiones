@@ -1,0 +1,18 @@
+services:
+  satd:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # Contraseña del administrador inicial (solo se usa al crear la base de datos). Ponla en el fichero .env.
+      SATD_ADMIN_CLAVE: ${SATD_ADMIN_CLAVE:-}
+      # "1" cuando la web se sirva por HTTPS (la cookie de sesión solo viaja cifrada)
+      SATD_COOKIE_SEGURA: ${SATD_COOKIE_SEGURA:-0}
+    volumes:
+      # Base de datos (usuarios, sesiones, flota por noche y rutas enviadas) en un volumen de Docker.
+      # Copia de seguridad: docker compose cp satd:/app/datos/satd.db ./copia-satd.db
+      - satd_datos:/app/datos
+    restart: unless-stopped
+
+volumes:
+  satd_datos:
